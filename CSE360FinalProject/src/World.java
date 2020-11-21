@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class World extends JFrame implements ActionListener{
     
 	JMenu about = new JMenu("About");
-	//JMenuItem aboutTeam = new JMenuItem("About Team");
+	JMenuItem aboutTeam = new JMenuItem("About Team");
 	JMenuBar menuBar = new JMenuBar();
     JMenu file = new JMenu("File");
     
@@ -18,19 +18,21 @@ public class World extends JFrame implements ActionListener{
     JMenuItem save = new JMenuItem("Save");
     JMenuItem plotData = new JMenuItem("Plot Data");
     
+    
+    
+    
+    
     public World() {
             
             
             //About Tab
-            //about.add(aboutTeam);
-            
-            
+            about.add(aboutTeam);
             
             loadRoster.addActionListener(this); //Adding actionListener to Load Roster
             addAttendance.addActionListener(this); 
             save.addActionListener(this);
             plotData.addActionListener(this);
-            //aboutTeam.addActionListener(this);
+            aboutTeam.addActionListener(this);
             about.addActionListener(this);
             
             file.add(loadRoster);
@@ -69,12 +71,12 @@ public class World extends JFrame implements ActionListener{
     	    if(returnVal == JFileChooser.APPROVE_OPTION) {
     	       System.out.println("You chose to open this file: " +
     	       chooser.getSelectedFile().getName());
-    	}
+    	    }
       
-    }
-    	if(e.getSource() == about) {
-    		JOptionPane.showMessageDialog(about, "Ben Laverman");
     	}
+    		if(e.getSource() == aboutTeam) {
+    			JOptionPane.showMessageDialog(about, "Benjamin Laverman");
+    		}
    
     
   }
