@@ -1,47 +1,32 @@
 
 import javax.swing.*;
-import javax.swing.event.MenuListener;
-
 import java.awt.*;
 import java.awt.event.*;
 
 
 public class World extends JFrame implements ActionListener{
     
-	JMenu about = new JMenu("About");
-	JMenuItem aboutTeam = new JMenuItem("About Team");
-	JMenuBar menuBar = new JMenuBar();
-    JMenu file = new JMenu("File");
-    
-    JMenuItem loadRoster = new JMenuItem("Load a Roster");
-    JMenuItem addAttendance = new JMenuItem("Add Attendance");
-    JMenuItem save = new JMenuItem("Save");
-    JMenuItem plotData = new JMenuItem("Plot Data");
-    
-    
-    
-    
-    
     public World() {
+            JMenuBar menuBar = new JMenuBar();
+            JMenu menu = new JMenu("File");
+            JMenu menu1 = new JMenu("About");
+            JMenuItem menuItem = new JMenuItem("Load a Roster");
+            JMenuItem menuItem2 = new JMenuItem("Add Attendance");
+            JMenuItem menuItem3 = new JMenuItem("Save");
+            JMenuItem menuItem4 = new JMenuItem("Plot Data");
             
+            menuItem.addActionListener(this); //Adding actionListener to Load Roster
+            menuItem2.addActionListener(this); 
+            menuItem3.addActionListener(this);
+            menuItem4.addActionListener(this);
             
-            //About Tab
-            about.add(aboutTeam);
+            menu.add(menuItem);
+            menu.add(menuItem2);
+            menu.add(menuItem3);
+            menu.add(menuItem4);
             
-            loadRoster.addActionListener(this); //Adding actionListener to Load Roster
-            addAttendance.addActionListener(this); 
-            save.addActionListener(this);
-            plotData.addActionListener(this);
-            aboutTeam.addActionListener(this);
-            about.addActionListener(this);
-            
-            file.add(loadRoster);
-            file.add(addAttendance);
-            file.add(save);
-            file.add(plotData);
-            
-            menuBar.add(file);
-            menuBar.add(about);
+            menuBar.add(menu);
+            menuBar.add(menu1);
             
             setLayout(new GridLayout(4,1));
            
@@ -64,20 +49,12 @@ public class World extends JFrame implements ActionListener{
      * Calls source when run button is clicked
      */
     public void actionPerformed(ActionEvent e) {
-    	if(e.getSource() == loadRoster) {
-    		JFileChooser chooser = new JFileChooser();
-    	     
-    	    int returnVal = chooser.showOpenDialog(null);
-    	    if(returnVal == JFileChooser.APPROVE_OPTION) {
-    	       System.out.println("You chose to open this file: " +
-    	       chooser.getSelectedFile().getName());
-    	    }
-      
-    	}
-    		if(e.getSource() == aboutTeam) {
-    			JOptionPane.showMessageDialog(about, "Benjamin Laverman");
-    		}
-   
-    
+      JFileChooser chooser = new JFileChooser();
+     
+    int returnVal = chooser.showOpenDialog(null);
+    if(returnVal == JFileChooser.APPROVE_OPTION) {
+       System.out.println("You chose to open this file: " +
+       chooser.getSelectedFile().getName());
+    }
   }
 }
