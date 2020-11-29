@@ -1,22 +1,68 @@
 
 
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.swing.*;
+
+import org.jdatepicker.impl.*;
+import org.jdatepicker.util.*;
+import org.jdatepicker.*;
+
+import java.util.*;
+
 public class AddAttendance extends Observable {
 	protected ArrayList<Student> Roster;
+	protected ArrayList<String[]> UnknownStudent;
+	protected ArrayList<String[]> Attendance;
+	protected String date;
+	protected JFrame frame;
 	
 	public AddAttendance()  {
 		Roster = new ArrayList<Student>();
+		UnknownStudent = new ArrayList<String[]>();
+		Attendance = new ArrayList<String[]>();
 	}
 	
-	public void addAttendance(File file, ArrayList<Student> newRoster) throws IOException {
-		/* Get date from user*/
+	public void addAttendance(File file, ArrayList<Student> newRoster, JFrame newFrame) throws IOException {
 		Roster = newRoster;
-		
+		frame = newFrame;
 		String row;
 		
+		/*
+		JFrame dateFrame = new JFrame();
+		dateFrame.setSize(300,300);
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		// Don't know about the formatter, but there it is...
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		 
+		dateFrame.add(datePicker);
+		dateFrame.setVisible(true);
+		
+		date = datePicker.getJFormattedTextField().getText();
+		System.out.print(date);
+		*/
+		
+		
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.print("Input new date:\t");
+		date = scan.nextLine();
+		
+		
+		for (int i = 0; i < Roster.size(); i++) {
+			Roster.get(i).addTime(0);
+		}
+		
+
+		int studentCount = 0;
 		BufferedReader csvReader = new BufferedReader(new FileReader(file));		// buffer read the file
 		while ((row = csvReader.readLine()) != null) {		// read each line in the file
 		    String[] data = row.split(",");		// separate each line by commas
@@ -29,11 +75,36 @@ public class AddAttendance extends Observable {
 
 		    // if asurite matches, set new time
 	    	if (data[0].equals(Roster.get(count).getAsurite())) {
-	    		//System.out.print("TEST");
+	    		if (Roster.get(count).getTime() == 0) {
+		    		studentCount++;
+	    		}
 	    		int newTime = Roster.get(count).getTime() + Integer.parseInt(data[1]);
 	    		Roster.get(count).setTime(newTime);
 	    	}
+	    	else {
+	    		UnknownStudent.add(data);
+	    	}
 		}
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        JLabel label = new JLabel("Data loaded for " + studentCount + " users in the roster");
+		JLabel newLabel1 = new JLabel(UnknownStudent.size() + " aditional attendee was found:");
+        panel.add(label); 
+		panel.add(newLabel1);
+        panel.setSize(250, 250);
+        //panel.setVisible(true);
+        
+		for (int i = 0; i < UnknownStudent.size(); i++) {
+			//System.out.println(UnknownStudent.get(i)[0] + "\t" + UnknownStudent.get(i)[1]);
+			JLabel newLabel2 = new JLabel(UnknownStudent.get(i)[0] + ", connected for " + UnknownStudent.get(i)[1]);
+			panel.add(newLabel2);
+		}
+        
+		JDialog dialog = new JDialog(frame, "Add Attendance");
+		dialog.setSize(250,250);
+		dialog.add(panel);
+		dialog.setVisible(true);
 		
 		setChanged(); 
         notifyObservers();
@@ -42,4 +113,10 @@ public class AddAttendance extends Observable {
 	public ArrayList<Student> getRoster() {
 		return Roster;
 	}
+	
+	public String getDate() {
+		return date;
+	}
 }
+
+
