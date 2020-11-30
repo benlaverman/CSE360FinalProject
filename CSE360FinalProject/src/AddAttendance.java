@@ -26,13 +26,12 @@ public class AddAttendance extends Observable {
 		Attendance = new ArrayList<String[]>();
 	}
 	
-	public void addAttendance(File file, ArrayList<Student> newRoster, JFrame newFrame) throws IOException {
+	public void addAttendance(File file, ArrayList<Student> newRoster, JFrame newFrame, String Date) throws IOException {
 		UnknownStudent = new ArrayList<String[]>();
+		date = Date;
 		Roster = newRoster;
 		frame = newFrame;
 		String row;
-		
-		
 		
 		
 		// this will continue to get user input 
@@ -72,8 +71,8 @@ public class AddAttendance extends Observable {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        JLabel label = new JLabel("Data loaded for " + studentCount + " users in the roster");
-		JLabel newLabel1 = new JLabel(UnknownStudent.size() + " aditional attendee was found:");
+        JLabel label = new JLabel("Data loaded for " + studentCount + " users in the roster",SwingConstants.CENTER);
+		JLabel newLabel1 = new JLabel(UnknownStudent.size() + " aditional attendee was found:",SwingConstants.CENTER);
         panel.add(label); 
 		panel.add(newLabel1);
         panel.setSize(250, 250);
@@ -81,12 +80,13 @@ public class AddAttendance extends Observable {
         
 		for (int i = 0; i < UnknownStudent.size(); i++) {
 			//System.out.println(UnknownStudent.get(i)[0] + "\t" + UnknownStudent.get(i)[1]);
-			JLabel newLabel2 = new JLabel(UnknownStudent.get(i)[0] + ", connected for " + UnknownStudent.get(i)[1]);
+			JLabel newLabel2 = new JLabel(UnknownStudent.get(i)[0] + ", connected for " + UnknownStudent.get(i)[1],SwingConstants.CENTER);
 			panel.add(newLabel2);
 		}
         
 		JDialog dialog = new JDialog(frame, "Add Attendance");
 		dialog.setSize(250,250);
+		dialog.setLocationRelativeTo(null);  
 		dialog.add(panel);
 		dialog.setVisible(true);
 		

@@ -28,8 +28,8 @@ public class LoadRoster extends JFrame implements Observer{
 		Header.add("ID");
 		Header.add("First Name");
 		Header.add("Last Name");
-		Header.add("Program");
-		Header.add("Level");
+		Header.add("Program and Plan");
+		Header.add("Academic Level");
 		Header.add("ASURITE");
 	}
 	
@@ -58,8 +58,18 @@ public class LoadRoster extends JFrame implements Observer{
 	
 	public void displayTable() {
 		
+		TableColumnModel columnModel = table.getColumnModel();
+		
+		table.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
+		table.setRowHeight(30);//set all row height 20
+		table.setRowHeight(0, 40); //set the first row size 40
+		
 		for (int i = 0; i < Header.size(); i++) {
 			tableModel.addColumn(Header.get(i));
+		}
+		
+		for (int i = 0; i < Header.size(); i++) {
+			columnModel.getColumn(i).setPreferredWidth(125);
 		}
 		
 //		System.out.println(Header.size());
@@ -80,7 +90,8 @@ public class LoadRoster extends JFrame implements Observer{
 			
 			tableModel.addRow(data);
 		}
-        
+
+
 	    ScrollPane = new JScrollPane(table);
 	    //frame.add(ScrollPane);
 	    //frame.setVisible(true);
@@ -101,9 +112,7 @@ public class LoadRoster extends JFrame implements Observer{
 	
 	public void update(Observable obj, Object arg) {
 		Roster = ((AddAttendance)obj).getRoster();
-		//String date = ((AddAttendance)obj).getDate();
-		DatePicker newDate = new DatePicker();
-		newDate.selectDate(frame);
+		String date = ((AddAttendance)obj).getDate();
 		
 		Header.add(date);
 		tableModel = new DefaultTableModel();
