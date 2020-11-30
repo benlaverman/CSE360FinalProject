@@ -101,7 +101,10 @@ public class LoadRoster extends JFrame implements Observer{
 	
 	public void update(Observable obj, Object arg) {
 		Roster = ((AddAttendance)obj).getRoster();
-		String date = ((AddAttendance)obj).getDate();
+		//String date = ((AddAttendance)obj).getDate();
+		DatePicker newDate = new DatePicker();
+		newDate.selectDate(frame);
+		
 		Header.add(date);
 		tableModel = new DefaultTableModel();
 		table = new JTable(tableModel);
