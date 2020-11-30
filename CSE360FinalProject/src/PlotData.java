@@ -15,16 +15,16 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeriesCollection; 
   
 
-public class PlotData extends LoadRoster{  
+public class PlotData extends JFrame{  
 
 	//JFrame newFrame = new JFrame();
 	  
-	public PlotData()
+	public PlotData(String title,ArrayList<Student> Roster, ArrayList<String> Header)
 	{  
-	    //super(title);  
+	    super(title);  
 	  
 	    // Create dataset  
-		XYDataset dataset = createDataset();//call the method and return the data  
+		XYDataset dataset = createDataset(Roster, Header);//call the method and return the data  
 		  
 		    // Create chart  
 		JFreeChart chart = ChartFactory.createScatterPlot(  
@@ -53,23 +53,27 @@ public class PlotData extends LoadRoster{
 	  
   
 	
-  private XYDataset createDataset() {  
+  private XYDataset createDataset(ArrayList<Student> Roster,ArrayList<String> Header ) {  
 	  
     XYSeriesCollection dataset = new XYSeriesCollection();   
     
     
     int numberOfDateAdded = Header.size() - 6;
     
+    System.out.println("this is number of date add: "+ numberOfDateAdded);
+    
     for(int i = 0; i < numberOfDateAdded; i ++) {		 
 		  
 		  int percentageArray[] = {0,0,0,0,0,0,0,0,0,0};//store the percentage
 		  
-		  XYSeries series1 = new XYSeries(Header.get(i+5)); //date of the attendance
+		  XYSeries series1 = new XYSeries(Header.get(i+6)); //date of the attendance
 		  
 
 	      for(int j =0; j < Roster.size(); j ++){
 			  
 	    	  int minute = Roster.get(j).getTimeIndex(i); //get the student time array 
+	    	  
+	    	  System.out.println("this is the minute of each student"+ j + " " + minute);
 			  
 			  int percentage = ((minute*100)/75);
 			  
@@ -90,6 +94,7 @@ public class PlotData extends LoadRoster{
 			  }else if(percentage>= 31 && percentage <=40){
 				  
 				  percentageArray[3] =percentageArray[3]+1;
+				  System.out.println(percentageArray[3]);
 				  
 			  }else if(percentage>= 41 && percentage <=50){
 				  

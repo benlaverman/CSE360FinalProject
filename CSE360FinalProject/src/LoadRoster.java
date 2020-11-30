@@ -57,10 +57,12 @@ public class LoadRoster extends JFrame implements Observer{
 	}
 	
 	public void displayTable() {
+		
 		for (int i = 0; i < Header.size(); i++) {
 			tableModel.addColumn(Header.get(i));
 		}
 		
+//		System.out.println(Header.size());
 		Object[] data = new Object[Header.size()];
 		for (int i = 0; i < Roster.size(); i++) {
 			data[0] = Roster.get(i).getID();
@@ -71,9 +73,9 @@ public class LoadRoster extends JFrame implements Observer{
 			data[5] = Roster.get(i).getAsurite();
 			
 			for (int j = 6; j < Header.size(); j++) {
-				for (int k = 0; k < Header.size() - 6; k++) {
-					data[j] = Roster.get(i).getTimeIndex(k);
-				}
+//				for (int k = 0; k < Header.size() - 6; k++) {
+					data[j] = Roster.get(i).getTimeIndex(j-6);
+//				}
 			}
 			
 			tableModel.addRow(data);
@@ -87,6 +89,10 @@ public class LoadRoster extends JFrame implements Observer{
 	
 	public ArrayList<Student> getRoster() {
 		return Roster;
+	}
+	
+	public ArrayList<String> getHeader() {
+		return Header;
 	}
 	
 	public JScrollPane getScrollPane() {

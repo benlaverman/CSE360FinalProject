@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import javax.swing.*;
-
-import org.jdatepicker.impl.*;
-import org.jdatepicker.util.*;
-import org.jdatepicker.*;
+//
+//import org.jdatepicker.impl.*;
+//import org.jdatepicker.util.*;
+//import org.jdatepicker.*;
 
 import java.util.*;
 
@@ -22,36 +22,35 @@ public class AddAttendance extends Observable {
 	
 	public AddAttendance()  {
 		Roster = new ArrayList<Student>();
-		UnknownStudent = new ArrayList<String[]>();
 		Attendance = new ArrayList<String[]>();
 	}
 	
 	public void addAttendance(File file, ArrayList<Student> newRoster, JFrame newFrame) throws IOException {
+		UnknownStudent = new ArrayList<String[]>();
 		Roster = newRoster;
 		frame = newFrame;
 		String row;
 		
-		/*
-		JFrame dateFrame = new JFrame();
-		dateFrame.setSize(300,300);
-		UtilDateModel model = new UtilDateModel();
-		Properties p = new Properties();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		// Don't know about the formatter, but there it is...
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		 
-		dateFrame.add(datePicker);
-		dateFrame.setVisible(true);
 		
-		date = datePicker.getJFormattedTextField().getText();
-		System.out.print(date);
-		*/
+//		JFrame dateFrame = new JFrame();
+//		dateFrame.setSize(300,300);
+//		UtilDateModel model = new UtilDateModel();
+//		Properties p = new Properties();
+//		p.put("text.today", "Today");
+//		p.put("text.month", "Month");
+//		p.put("text.year", "Year");
+//		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+//		// Don't know about the formatter, but there it is...
+//		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+//		 
+//		dateFrame.add(datePicker);
+//		dateFrame.setVisible(true);
+//		
+//		date = datePicker.getJFormattedTextField().getText();
+//		System.out.print(date);
+//		
 		
-		
-		
+		// this will continue to get user input 
 		Scanner scan = new Scanner(System.in);
 		System.out.print("Input new date:\t");
 		date = scan.nextLine();
