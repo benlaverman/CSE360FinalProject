@@ -14,17 +14,28 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.plot.PlotOrientation; 
 import org.jfree.data.xy.XYSeriesCollection; 
   
-
+/**
+ * 
+ * @author zengkeatgiam
+ * this class handle all the functionality of plot data
+ *
+ */
 public class PlotData extends JFrame{  
-
-	//JFrame newFrame = new JFrame();
 	  
+	/**
+	 * 
+	 * @param title
+	 * @param Roster
+	 * @param Header
+	 * this method will take the data structure that store the data and perform some operation to plot it
+	 */
 	public PlotData(String title,ArrayList<Student> Roster, ArrayList<String> Header)
 	{  
 	    super(title);  
 	  
 	    // Create dataset  
-		XYDataset dataset = createDataset(Roster, Header);//call the method and return the data  
+	    //call the method and return the data set for plotting
+		XYDataset dataset = createDataset(Roster, Header);
 		  
 		    // Create chart  
 		JFreeChart chart = ChartFactory.createScatterPlot(  
@@ -40,85 +51,98 @@ public class PlotData extends JFrame{
 		 
 		// Create the chart Panel  
 	    ChartPanel panel = new ChartPanel(chart);  
-	    /*
-	    JDialog dialog = new JDialog(frame, "Plot Data");
-	    dialog.setSize(800, 400);
-	    dialog.add(panel);
-	    dialog.setVisible(true);
-	    */
 	    setContentPane(panel);
-		//newFrame.repaint();
 	    
 	  }  
 	  
   
 	
+	/**
+	 * 
+	 * @param Roster
+	 * @param Header
+	 * @return
+	 * this method return the dataset after process the data inside the data structure
+	 */
   private XYDataset createDataset(ArrayList<Student> Roster,ArrayList<String> Header ) {  
 	  
     XYSeriesCollection dataset = new XYSeriesCollection();   
     
+    /**
+     * subtract the original 6 field of the roster we know how many attendance file have been add
+     */
+    int numberOfDateAdded = Header.size() - 6; 
     
-    int numberOfDateAdded = Header.size() - 6;
-    
-    System.out.println("this is number of date add: "+ numberOfDateAdded);
-    
+    /**
+     * loop by the total number of attendance file that have been add
+     */
     for(int i = 0; i < numberOfDateAdded; i ++) {		 
 		  
-		  int percentageArray[] = {0,0,0,0,0,0,0,0,0,0};//store the percentage
+		  int percentageArray[] = {0,0,0,0,0,0,0,0,0,0,0};//store the number of percentage
 		  
-		  XYSeries series1 = new XYSeries(Header.get(i+6)); //date of the attendance
+		  XYSeries series1 = new XYSeries(Header.get(i+6)); //display the date of the attendance
 		  
-
+		  /**
+		   * loop through each student and get their attendance time
+		   */
 	      for(int j =0; j < Roster.size(); j ++){
 			  
-	    	  int minute = Roster.get(j).getTimeIndex(i); //get the student time array 
+	    	  int minute = Roster.get(j).getTimeIndex(i); //get the student attendance time by index 
 	    	  
 	    	  System.out.println("this is the minute of each student"+ j + " " + minute);
 			  
+	    	  //process the attendance time by percentage
 			  int percentage = ((minute*100)/75);
 			  
-			  //process the percentage of minute
-
-			  if(percentage>= 0 && percentage <=10) {
+			/**
+			 * if a student attendance percentage match the condition,
+			 * then +1 into an array index. 
+			 * E.x: 0 to 9 percentage will add 1 into index 0,
+			 * 10 to 19 percent will add 1 into index 1 etc.
+			 */
+			  if(percentage>= 0 && percentage <=9) {
 				  
-				  percentageArray[0] = percentageArray[0]+1; //plus 1 into each array if the percentage is valid
+				  percentageArray[0] = percentageArray[0]+1; 
 				  
-			  }else if(percentage>= 11 && percentage <=20){
+			  }else if(percentage>= 10 && percentage <=19){
 				  
 				  percentageArray[1] =percentageArray[1]+1;
 
-			  }else if(percentage>= 21 && percentage <=30){
+			  }else if(percentage>= 20 && percentage <=29){
 				  
 				  percentageArray[2] =percentageArray[2]+1;
 				  
-			  }else if(percentage>= 31 && percentage <=40){
+			  }else if(percentage>= 30 && percentage <=39){
 				  
 				  percentageArray[3] =percentageArray[3]+1;
-				  System.out.println(percentageArray[3]);
 				  
-			  }else if(percentage>= 41 && percentage <=50){
+			  }else if(percentage>= 40 && percentage <=49){
 				  
 				  percentageArray[4] =percentageArray[4]+1;
 				  
-			  }else if(percentage>= 51 && percentage <=60){
+			  }else if(percentage>= 50 && percentage <=59){
 				  
 				  percentageArray[5] =percentageArray[5]+1;
 				  
-			  }else if(percentage>= 61 && percentage <=70){
+			  }else if(percentage>= 60 && percentage <=69){
 				  
 				  percentageArray[6] =percentageArray[6]+1;
 				  
-			  }else if(percentage>= 71 && percentage <=80){
+			  }else if(percentage>= 70 && percentage <=79){
 				  
 				  percentageArray[7] =percentageArray[7]+1;
 				  
-			  }else if(percentage>= 81 && percentage <=90){
+			  }else if(percentage>= 80 && percentage <=89){
 				  
 				  percentageArray[8] =percentageArray[8]+1;
 				  
-			  }else if(percentage>= 91 && percentage <=100){
+			  }else if(percentage>= 90 && percentage <=99){
 				  
 				  percentageArray[9] =percentageArray[9]+1;
+				  
+			  }else if(percentage>= 100){
+				  
+				  percentageArray[10] =percentageArray[10]+1;
 				  
 			  }
 		  } 
@@ -126,27 +150,15 @@ public class PlotData extends JFrame{
 		  /**
 		   * loop the content of the array and plot
 		   */
-		  for(int k=0; k < 10; k++) {
+		  for(int k=0; k < 11; k++) {
 			  
-			  series1.add(k+1, percentageArray[k]);//.add(x,y)
+			  series1.add(k, percentageArray[k]);//.add(x,y)
 		  }
-		  
+		  //add to the data set
 		  dataset.addSeries(series1); 
 	  }
     
     return dataset;  
   }  
   
-  /*
-  public static void main(String[] args) {  
-	    
-    SwingUtilities.invokeLater(() -> {  
-    	PlotData example = new PlotData("Scatter Chart Example");  
-      example.setSize(800, 400);  
-      example.setLocationRelativeTo(null);  
-      example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  
-      example.setVisible(true);  
-    });  
-  } 
-  */
 }  

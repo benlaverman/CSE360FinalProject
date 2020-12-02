@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -68,25 +69,39 @@ public class AddAttendance extends Observable {
 	    	}
 		}
 
+		csvReader.close();
+
 		// create new pop-up
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        JLabel label = new JLabel("Data loaded for " + studentCount + " users in the roster",SwingConstants.CENTER);		// how many student attendance times were added
-		JLabel newLabel1 = new JLabel(UnknownStudent.size() + " aditional attendee was found:",SwingConstants.CENTER);		// how many student times were not added
+		
+		//set the font of the label
+		Font font = new Font("Courier", Font.BOLD,15);
+		
+        JLabel label = new JLabel("<html>Data loaded for " + studentCount + " users in the roster <br><br> <html>",SwingConstants.CENTER);// how many student attendance times were added
+		label.setFont(font);
+        
+        JLabel newLabel1 = new JLabel("<html> "+ UnknownStudent.size() + " aditional attendee was found: <br><br> <html>",SwingConstants.CENTER);	// how many student times were not added
+        newLabel1.setFont(font);
+        
         panel.add(label);
 		panel.add(newLabel1);
-        panel.setSize(250, 250);
+        panel.setSize(500, 300);
         
+        /**
+         * loop through all the unknown student in the attendance file to display in the dialog
+         */
 		for (int i = 0; i < UnknownStudent.size(); i++) {
 			
 			// display each student information that was not added
-			JLabel newLabel2 = new JLabel(UnknownStudent.get(i)[0] + ", connected for " + UnknownStudent.get(i)[1],SwingConstants.CENTER);
+			JLabel newLabel2 = new JLabel("<html>" + UnknownStudent.get(i)[0] + ", connected for " + UnknownStudent.get(i)[1] + " minutes <br><br> <html>",SwingConstants.CENTER);
+			newLabel2.setFont(font);
 			panel.add(newLabel2);
 		}
         
 		// create new dialog
 		JDialog dialog = new JDialog(frame, "Add Attendance");
-		dialog.setSize(250,250);
+		dialog.setSize(450,300);
 		dialog.setLocationRelativeTo(null);  
 		dialog.add(panel);
 		dialog.setVisible(true);

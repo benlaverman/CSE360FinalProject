@@ -68,7 +68,9 @@ public class LoadRoster extends JFrame implements Observer{
 		table.setRowHeight(30);//set all row height 20
 		table.setRowHeight(0, 40); //set the first row size 40
 		
-		// add Header to the table
+		/**
+		 * loop through the header array and add to the table column
+		 */
 		for (int i = 0; i < Header.size(); i++) {
 			tableModel.addColumn(Header.get(i));
 		}
@@ -80,6 +82,11 @@ public class LoadRoster extends JFrame implements Observer{
 		
 		
 		Object[] data = new Object[Header.size()];
+		
+		/**
+		 * loop through the roster data structure, get the data,
+		 * and add as a row in the table
+		 */
 		for (int i = 0; i < Roster.size(); i++) {
 			
 			// add constant header labels
@@ -95,7 +102,7 @@ public class LoadRoster extends JFrame implements Observer{
 				data[j] = Roster.get(i).getTimeIndex(j-6);
 			}
 			
-			tableModel.addRow(data);		// add the row to the table
+			tableModel.addRow(data);		// add each row to the table
 		}
 
 	    ScrollPane = new JScrollPane(table);		// update theScrollPane with the table
@@ -131,7 +138,6 @@ public class LoadRoster extends JFrame implements Observer{
 	public void update(Observable obj, Object arg) {
 		Roster = ((AddAttendance)obj).getRoster();
 		String date = ((AddAttendance)obj).getDate();
-		
 		Header.add(date);
 		tableModel = new DefaultTableModel();
 		table = new JTable(tableModel);

@@ -3,6 +3,11 @@ import java.util.*;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
+/**
+ * 
+ * @author zengkeatgiam
+ *this class is built for defined the date format of date picker
+ */
 public class DateLabelFormatter extends AbstractFormatter {
 
     private String datePattern = "yyyy-MM-dd";
